@@ -4,7 +4,7 @@ CC	= g++
 
 RM	= rm -f
 
-SRCS	= ./srcs/main.cpp	\
+SRCS	= ./main.cpp	\
 	  ./srcs/Plazza.cpp
 
 NB_FILE = `find . -name "*.cpp" | wc -l`
@@ -30,6 +30,7 @@ WARN_STRING	= "[WARNING]"
 COM_STRING	= "[Compiling]"
 BUILD_STRING	= "[Building]"
 DEL_STRING	= "[Deleting]"
+
 all: $(NAME)
 
 %.o:	%.cpp
@@ -41,8 +42,7 @@ all: $(NAME)
 		printf "%-50b%b" "$(COM_COLOR)$(COM_STRING)  $(OBJ_COLOR)$(<)" "$(OK_COLOR)$(OK_STRING)$(NO_COLOR)\n"; \
 	fi;
 
-# %.o:
-# 	@echo "pd"
+
 $(NAME): $(OBJS)
 	 @echo
 	 @$(CC) $(OBJS) -o $(NAME) $(LDFLAGS); \
