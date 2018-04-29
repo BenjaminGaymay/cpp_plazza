@@ -11,7 +11,7 @@ NB_FILE = `find . -name "*.cpp" | wc -l`
 
 OBJS	= $(SRCS:.cpp=.o)
 
-CPPFLAGS = -I ./inc/
+CPPFLAGS = -I ./includes/
 CPPFLAGS += -W -Wall -Wextra
 
 LDFLAGS += -pthread

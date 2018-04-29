@@ -5,9 +5,9 @@
 ** main
 */
 
-#include <iostream>
 #include "macro.hpp"
 #include "Plazza.hpp"
+#include "Log.hpp"
 
 void usage(const char *prog)
 {
@@ -22,5 +22,11 @@ int main(int ac, char **av)
 
 	if (ac != 2)
 		return (usage(av[0]), ERROR);
+	try {
+		plazza.setMaxThreads(av[1]);
+		plazza.run();
+	} catch (std::exception &e) {
+		return (std::cout << e.what() << std::endl, ERROR);
+	}
 	return (SUCCESS);
 }
