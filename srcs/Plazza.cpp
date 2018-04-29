@@ -9,7 +9,11 @@
 #include "Plazza.hpp"
 
 Plazza::Plazza::Plazza()
-{}
+{
+	m_convert["PHONE_NUMBER"] = PHONE_NUMBER;
+	m_convert["EMAIL_ADDRESS"] = EMAIL_ADDRESS;
+	m_convert["IP_ADDRESS"] = IP_ADDRESS;
+}
 
 Plazza::Plazza::~Plazza()
 {}
@@ -72,8 +76,7 @@ void Plazza::Plazza::run()
 		words = StringTools::split(line, " ");
 		getInformationFromString(information, words);
 		getFilesFromString(files, words);
-		if (information.empty())
+		if (information.empty() or files.empty())
 			continue;
-		
 	}
 }
