@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include "macro.hpp"
+#include "Plazza.hpp"
 
 void usage(const char *prog)
 {
@@ -17,6 +18,8 @@ void usage(const char *prog)
 
 int main(int ac, char **av)
 {
+	Plazza::Plazza plazza;
+
 	if (ac != 2)
 		return (usage(av[0]), ERROR);
 	return (SUCCESS);
