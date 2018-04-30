@@ -9,6 +9,9 @@
 
 #include <iostream>
 #include <fstream>
+#include <mutex>
+
+static std::mutex g_write;
 
 namespace Plazza {
 	class Log {
@@ -17,9 +20,11 @@ namespace Plazza {
 		~Log() {};
 
 		static void writeLogs(const std::string &msg) {
-			std::ofstream file("./logs/logs.txt");
+			// while (g_write.try_lock() != true) {}
+			std::ofstream file("./logs/logs.txt", std::ios_base::app);
 
 			file << msg << std::endl;
+			// g_write.unlock();
 		}
 	protected:
 	private:

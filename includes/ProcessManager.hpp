@@ -10,6 +10,7 @@
 #include <vector>
 #include <iostream>
 #include <thread>
+#include <future>
 #include "Parser.hpp"
 #include "Log.hpp"
 

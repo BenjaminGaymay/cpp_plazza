@@ -17,7 +17,7 @@ CPPFLAGS = -I ./includes/	\
 
 CPPFLAGS += -W -Wall -Wextra
 
-LDFLAGS += -pthread
+LDFLAGS += -lpthread
 
 COM_COLOR	= \033[0;34m
 OBJ_COLOR	= \033[0;36m

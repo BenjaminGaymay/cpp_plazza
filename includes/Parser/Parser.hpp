@@ -11,6 +11,10 @@
 #include <regex>
 #include <fstream>
 #include <map>
+#include <mutex>
+#include "Log.hpp"
+
+static std::mutex g_file;
 
 namespace Plazza {
 	class Parser {
@@ -18,7 +22,8 @@ namespace Plazza {
 		Parser();
 		~Parser();
 
-		std::string getInformation(std::string &information, std::string &file);
+		void getInformation(std::string &information, std::string &fileName);
+		void test(std::string);
 
 	private:
 		std::map<std::string, std::string> m_pattern;
