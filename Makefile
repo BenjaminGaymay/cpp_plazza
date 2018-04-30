@@ -4,14 +4,17 @@ CC	= g++
 
 RM	= rm -f
 
-SRCS	= ./main.cpp	\
-	  ./srcs/Plazza.cpp
-
-NB_FILE = `find . -name "*.cpp" | wc -l`
+SRCS	= ./main.cpp			\
+	  ./srcs/Plazza.cpp		\
+	  ./srcs/ProcessManager.cpp	\
+	  ./srcs/Parser/Parser.cpp
 
 OBJS	= $(SRCS:.cpp=.o)
 
-CPPFLAGS = -I ./includes/
+CPPFLAGS = -I ./includes/	\
+	   -I ./includes/Macro	\
+	   -I ./includes/Parser
+
 CPPFLAGS += -W -Wall -Wextra
 
 LDFLAGS += -pthread
@@ -30,6 +33,7 @@ WARN_STRING	= "[WARNING]"
 COM_STRING	= "[Compiling]"
 BUILD_STRING	= "[Building]"
 DEL_STRING	= "[Deleting]"
+FORMAT_STRING	= "%-55b%b"
 
 all: $(NAME)
 
@@ -37,9 +41,9 @@ all: $(NAME)
 	@$(CC) $(CPPFLAGS) -c $< -o $@; \
 	RESULT=$$?; \
 	if [ $$RESULT -ne 0 ]; then \
-		printf "%-50b%b" "$(COM_COLOR)$(COM_STRING)  $(OBJ_COLOR)$(<)" "$(ERROR_COLOR)$(ERROR_STRING)$(NO_COLOR)\n"; \
+		printf $(FORMAT_STRING) "$(COM_COLOR)$(COM_STRING)  $(OBJ_COLOR)$(<)" "$(ERROR_COLOR)$(ERROR_STRING)$(NO_COLOR)\n"; \
 	else \
-		printf "%-50b%b" "$(COM_COLOR)$(COM_STRING)  $(OBJ_COLOR)$(<)" "$(OK_COLOR)$(OK_STRING)$(NO_COLOR)\n"; \
+		printf $(FORMAT_STRING) "$(COM_COLOR)$(COM_STRING)  $(OBJ_COLOR)$(<)" "$(OK_COLOR)$(OK_STRING)$(NO_COLOR)\n"; \
 	fi;
 
 
@@ -48,9 +52,9 @@ $(NAME): $(OBJS)
 	 @$(CC) $(OBJS) -o $(NAME) $(LDFLAGS); \
 	 RESULT=$$?; \
 	 if [ $$RESULT -ne 0 ]; then \
- 		printf "%-50b%b" "$(COM_COLOR)$(BUILD_STRING)   $(OBJ_COLOR)$(@)" "$(ERROR_COLOR)$(ERROR_STRING)$(NO_COLOR)\n"; \
+ 		printf $(FORMAT_STRING) "$(COM_COLOR)$(BUILD_STRING)   $(OBJ_COLOR)$(@)" "$(ERROR_COLOR)$(ERROR_STRING)$(NO_COLOR)\n"; \
 	 else \
-		printf "%-50b%b" "$(COM_COLOR)$(BUILD_STRING)   $(OBJ_COLOR)$(@)" "$(OK_COLOR)$(OK_STRING)$(NO_COLOR)\n"; \
+		printf $(FORMAT_STRING) "$(COM_COLOR)$(BUILD_STRING)   $(OBJ_COLOR)$(@)" "$(OK_COLOR)$(OK_STRING)$(NO_COLOR)\n"; \
 	 fi;
 
 clean:

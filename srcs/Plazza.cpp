@@ -64,19 +64,47 @@ void Plazza::Plazza::getFilesFromString(std::vector<std::string> &files, std::ve
 	}
 }
 
+void Plazza::Plazza::processCommand(std::string &cmd)
+{
+	std::vector<std::string> files;
+	std::vector<std::string> tab;
+	std::string information;
+	pid_t pid;
+
+	mkfifo(FIFO_FILE, 777);
+	tab = StringTools::split(cmd);
+	getInformationFromString(information, tab);
+	getFilesFromString(files, tab);
+	if (information.empty() or files.empty())
+		return;
+	pid = fork();
+	if (pid == ERR_FC)
+		throw std::runtime_error("Error: can't fork the program.");
+	if (pid == CHILD) {
+		m_procManager.setMaxThreads(m_maxThreads);
+		if (m_procManager.launchThreads(information, files) == false) {
+		}
+	}
+}
+
 void Plazza::Plazza::run()
 {
-	std::string information;
 	std::vector<std::string> files;
 	std::vector<std::string> words;
+	std::vector<std::string> tab;
+	std::string information;
 
+	mkfifo(FIFO_FILE, 777);
 	if (m_maxThreads <= 0)
 		throw std::runtime_error("Error: n° of threads must be superior to 0.");
 	for (std::string line; std::getline(std::cin, line);) {
-		words = StringTools::split(line, " ");
-		getInformationFromString(information, words);
-		getFilesFromString(files, words);
-		if (information.empty() or files.empty())
-			continue;
+		if (line == "exit")
+			break;
+		tab = StringTools::split(line, ",");
+		for (auto &el : tab) {
+			el = StringTools::rstrip(el);
+			el = StringTools::lstrip(el);
+			processCommand(el);
+		}
 	}
 }

@@ -19,6 +19,7 @@ void usage(const char *prog)
 int main(int ac, char **av)
 {
 	Plazza::Plazza plazza;
+	int ret = SUCCESS;
 
 	if (ac != 2)
 		return (usage(av[0]), ERROR);
@@ -26,7 +27,9 @@ int main(int ac, char **av)
 		plazza.setMaxThreads(av[1]);
 		plazza.run();
 	} catch (std::exception &e) {
-		return (std::cout << e.what() << std::endl, ERROR);
+		std::cout << e.what() << std::endl;
+		ret = ERROR;
 	}
-	return (SUCCESS);
+	unlink(FIFO_FILE);
+	return (ret);
 }
