@@ -15,6 +15,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include "ProcessManager.hpp"
+#include "StringTools.hpp"
 #include "macro.hpp"
 
 namespace Plazza {

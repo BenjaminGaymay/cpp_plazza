@@ -7,17 +7,19 @@ RM	= rm -f
 SRCS	= ./main.cpp			\
 	  ./srcs/Plazza.cpp		\
 	  ./srcs/ProcessManager.cpp	\
-	  ./srcs/Parser/Parser.cpp
+	  ./srcs/Parser/Parser.cpp	\
+	  ./srcs/Concurrency/Mutex.cpp
 
 OBJS	= $(SRCS:.cpp=.o)
 
-CPPFLAGS = -I ./includes/	\
-	   -I ./includes/Macro	\
-	   -I ./includes/Parser
+CPPFLAGS = -I ./includes/		\
+	   -I ./includes/Macro		\
+	   -I ./includes/Parser		\
+	   -I ./includes/Concurrency
 
 CPPFLAGS += -W -Wall -Wextra
 
-LDFLAGS += -lpthread
+LDFLAGS += -pthread
 
 COM_COLOR	= \033[0;34m
 OBJ_COLOR	= \033[0;36m

@@ -27,7 +27,7 @@ int main(int ac, char **av)
 		plazza.setMaxThreads(av[1]);
 		plazza.run();
 	} catch (std::exception &e) {
-		std::cout << e.what() << std::endl;
+		std::cerr << e.what() << std::endl;
 		ret = ERROR;
 	}
 	unlink(FIFO_FILE);

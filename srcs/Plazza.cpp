@@ -5,7 +5,6 @@
 ** Plazza
 */
 
-#include "StringTools.hpp"
 #include "Plazza.hpp"
 
 Plazza::Plazza::Plazza()
@@ -71,6 +70,7 @@ void Plazza::Plazza::processCommand(std::string &cmd)
 	std::string information;
 	pid_t pid;
 
+	std::cout << "salut" << std::endl;
 	mkfifo(FIFO_FILE, 777);
 	tab = StringTools::split(cmd);
 	getInformationFromString(information, tab);
@@ -84,6 +84,7 @@ void Plazza::Plazza::processCommand(std::string &cmd)
 		m_procManager.setMaxThreads(m_maxThreads);
 		if (m_procManager.launchThreads(information, files) == false) {
 		}
+		exit(0);
 	}
 }
 
@@ -100,11 +101,18 @@ void Plazza::Plazza::run()
 	for (std::string line; std::getline(std::cin, line);) {
 		if (line == "exit")
 			break;
-		tab = StringTools::split(line, ",");
-		for (auto &el : tab) {
+		tab = StringTools::split(line, ";");
+		std::for_each(tab.begin(), tab.end(), [this](std::string &el) {
 			el = StringTools::rstrip(el);
 			el = StringTools::lstrip(el);
+			std::cout << "??" << std::endl;
 			processCommand(el);
-		}
+		});
+		// for (auto &el : tab) {
+		// 	el = StringTools::rstrip(el);
+		// 	el = StringTools::lstrip(el);
+		// 	std::cout << el << std::endl;
+		// 	processCommand(el);
+		// }
 	}
 }

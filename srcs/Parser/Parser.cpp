@@ -19,6 +19,7 @@ Plazza::Parser::~Parser()
 
 void Plazza::Parser::getInformation(std::string &information, std::string &fileName)
 {
+	g_file.lock();
 	std::fstream file(fileName);
 	std::string line;
 	std::smatch match;
@@ -28,12 +29,13 @@ void Plazza::Parser::getInformation(std::string &information, std::string &fileN
 	if (file.is_open()) {
 		while (std::getline(file, line)) {
 			if (std::regex_search(line, match, pattern)) {
-				std::cout << match[0] << std::endl;
+				// std::cout << match[0] << std::endl;
 				Log::writeLogs(match[0]);
+				break;
 			}
 		}
 	}
-	// g_file.unlock();
+	g_file.unlock();
 }
 
 void Plazza::Parser::test(std::string a)

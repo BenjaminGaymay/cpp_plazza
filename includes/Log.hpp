@@ -20,11 +20,11 @@ namespace Plazza {
 		~Log() {};
 
 		static void writeLogs(const std::string &msg) {
-			// while (g_write.try_lock() != true) {}
+			g_write.lock();
 			std::ofstream file("./logs/logs.txt", std::ios_base::app);
 
 			file << msg << std::endl;
-			// g_write.unlock();
+			g_write.unlock();
 		}
 	protected:
 	private:
