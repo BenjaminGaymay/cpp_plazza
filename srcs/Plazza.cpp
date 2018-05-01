@@ -63,7 +63,6 @@ void Plazza::Plazza::processCommand(std::string &cmd)
 	std::string information;
 	pid_t pid;
 
-	mkfifo(FIFO_FILE, 777);
 	tab = StringTools::split(cmd);
 	getInformationFromString(information, tab);
 	getFilesFromString(files, tab);
@@ -74,8 +73,7 @@ void Plazza::Plazza::processCommand(std::string &cmd)
 		throw std::runtime_error("Error: can't fork the program.");
 	if (pid == CHILD) {
 		m_procManager.setMaxThreads(m_maxThreads);
-		if (m_procManager.launchThreads(information, files) == false) {
-		}
+		m_procManager.launchThreads(information, files);
 		exit(0);
 	}
 }

@@ -21,7 +21,6 @@ void Plazza::Log::writeLogs(const Information &info, const std::string &msg) {
 		{IP_ADDRESS, "IP address has been found"}
 	};
 	std::ofstream file("./logs/logs.txt", std::ios_base::app);
-
 	file << convert[info] << " : " <<msg << std::endl;
 	g_write.unlock();
 }

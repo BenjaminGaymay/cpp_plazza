@@ -26,16 +26,20 @@ void Plazza::Parser::getInformation(std::string &information, std::string &fileN
 	g_file.lock();
 	std::fstream file(fileName);
 	std::string line;
-	std::smatch match;
+	std::smatch matches;
 	std::regex pattern(m_pattern[information]);
 
 	if (file.is_open()) {
 		while (std::getline(file, line)) {
-			if (std::regex_search(line, match, pattern)) {
-				Log::writeLogs(m_convert[information], match[0]);
-				break;
+			if (std::regex_search(line, matches, pattern)) {
+				for (auto match : matches) {
+					Log::writeLogs(m_convert[information], match);
+					std::cout << match << std::endl;
+				}
+
 			}
 		}
+	} else {
 	}
 	g_file.unlock();
 }
