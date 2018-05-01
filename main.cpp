@@ -30,6 +30,5 @@ int main(int ac, char **av)
 		std::cerr << e.what() << std::endl;
 		ret = ERROR;
 	}
-	unlink(FIFO_FILE);
 	return (ret);
 }

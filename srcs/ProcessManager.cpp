@@ -24,12 +24,18 @@ bool Plazza::ProcessManager::launchThreads(std::string &information, std::vector
 	Parser parser;
 	std::string info;
 	std::vector<std::thread> th;
+	int fd;
 
-	if (m_currThreads == m_maxThreads)
+	if (m_currThreads == m_maxThreads) {
 		return false;
-	for (auto &file : files)
+	}
+	fd = open(FIFO_FILE, O_WRONLY);
+	for (auto &file : files) {
 		th.emplace_back(&Plazza::Parser::getInformation, parser, std::ref(information), std::ref(file));
+		m_currThreads++;
+	}
 	for (auto &c : th)
 		c.join();
+	close(fd);
 	return true;
 }

@@ -11,6 +11,11 @@
 #include <iostream>
 #include <thread>
 #include <future>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include "macro.hpp"
 #include "Parser.hpp"
 #include "Log.hpp"
 

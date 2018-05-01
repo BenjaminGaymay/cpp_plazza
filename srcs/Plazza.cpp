@@ -105,14 +105,8 @@ void Plazza::Plazza::run()
 		std::for_each(tab.begin(), tab.end(), [this](std::string &el) {
 			el = StringTools::rstrip(el);
 			el = StringTools::lstrip(el);
-			std::cout << "??" << std::endl;
 			processCommand(el);
 		});
-		// for (auto &el : tab) {
-		// 	el = StringTools::rstrip(el);
-		// 	el = StringTools::lstrip(el);
-		// 	std::cout << el << std::endl;
-		// 	processCommand(el);
-		// }
 	}
+	unlink(FIFO_FILE);
 }
