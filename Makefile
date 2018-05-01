@@ -7,13 +7,15 @@ RM	= rm -f
 SRCS	= ./main.cpp			\
 	  ./srcs/Plazza.cpp		\
 	  ./srcs/ProcessManager.cpp	\
-	  ./srcs/Parser/Parser.cpp
+	  ./srcs/Parser/Parser.cpp	\
+	  ./srcs/Log/Log.cpp
 
 OBJS	= $(SRCS:.cpp=.o)
 
 CPPFLAGS = -I ./includes/		\
 	   -I ./includes/Macro		\
-	   -I ./includes/Parser
+	   -I ./includes/Parser		\
+	   -I ./includes/Log
 
 CPPFLAGS += -W -Wall -Wextra
 
