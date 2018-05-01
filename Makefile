@@ -38,12 +38,13 @@ FORMAT_STRING	= "%-55b%b"
 all: $(NAME)
 
 %.o:	%.cpp
+	@printf "%-58b" "$(COM_COLOR)$(COM_STRING)  $(OBJ_COLOR)$(<)$(NO_COLOR)";
 	@$(CC) $(CPPFLAGS) -c $< -o $@; \
 	RESULT=$$?; \
 	if [ $$RESULT -ne 0 ]; then \
-		printf $(FORMAT_STRING) "$(COM_COLOR)$(COM_STRING)  $(OBJ_COLOR)$(<)" "$(ERROR_COLOR)$(ERROR_STRING)$(NO_COLOR)\n"; \
+		printf "%b" "$(ERROR_COLOR)$(ERROR_STRING)$(NO_COLOR)\n"; \
 	else \
-		printf $(FORMAT_STRING) "$(COM_COLOR)$(COM_STRING)  $(OBJ_COLOR)$(<)" "$(OK_COLOR)$(OK_STRING)$(NO_COLOR)\n"; \
+		printf "%b" "$(OK_COLOR)$(OK_STRING)$(NO_COLOR)\n"; \
 	fi;
 
 
