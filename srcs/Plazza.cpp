@@ -12,6 +12,11 @@ Plazza::Plazza::Plazza()
 	m_convert["PHONE_NUMBER"] = PHONE_NUMBER;
 	m_convert["EMAIL_ADDRESS"] = EMAIL_ADDRESS;
 	m_convert["IP_ADDRESS"] = IP_ADDRESS;
+	m_infos = {
+		"EMAIL_ADDRESS",
+		"PHONE_NUMBER",
+		"IP_ADDRESS"
+	};
 }
 
 Plazza::Plazza::~Plazza()
@@ -31,14 +36,8 @@ void Plazza::Plazza::setMaxThreads(const char *maxThreads)
 
 void Plazza::Plazza::getInformationFromString(std::string &information, std::vector<std::string> &words)
 {
-	std::vector<std::string> infos = {
-		"EMAIL_ADDRESS",
-		"PHONE_NUMBER",
-		"IP_ADDRESS"
-	};
-
 	for (auto &word : words)
-		for (auto &info : infos)
+		for (auto &info : m_infos)
 			if (word.find(info) != std::string::npos) {
 				information = word;
 				return;
@@ -48,17 +47,11 @@ void Plazza::Plazza::getInformationFromString(std::string &information, std::vec
 void Plazza::Plazza::getFilesFromString(std::vector<std::string> &files, std::vector<std::string> &words)
 {
 	int i = 0;
-	std::vector<std::string> infos = {
-		"EMAIL_ADDRESS",
-		"PHONE_NUMBER",
-		"IP_ADDRESS"
-	};
 
 	files = words;
 	for (auto &file : files) {
-		if (std::find(infos.begin(), infos.end(), file) != infos.end()) {
+		if (std::find(m_infos.begin(), m_infos.end(), file) != m_infos.end())
 			files.erase(files.begin() + i);
-		}
 		++i;
 	}
 }
@@ -70,7 +63,6 @@ void Plazza::Plazza::processCommand(std::string &cmd)
 	std::string information;
 	pid_t pid;
 
-	std::cout << "salut" << std::endl;
 	mkfifo(FIFO_FILE, 777);
 	tab = StringTools::split(cmd);
 	getInformationFromString(information, tab);

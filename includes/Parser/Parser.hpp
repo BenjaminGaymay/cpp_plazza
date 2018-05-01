@@ -13,6 +13,7 @@
 #include <map>
 #include <mutex>
 #include "Log.hpp"
+#include "macro.hpp"
 
 static std::mutex g_file;
 
@@ -27,5 +28,6 @@ namespace Plazza {
 
 	private:
 		std::map<std::string, std::string> m_pattern;
+		std::map<std::string, Information> m_convert;
 	};
 }

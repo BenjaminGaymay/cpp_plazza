@@ -14,3 +14,11 @@
 #define ERR_FC -1
 
 #define FIFO_FILE "/tmp/myfifo"
+
+namespace Plazza {
+	enum Information {
+		PHONE_NUMBER,
+		EMAIL_ADDRESS,
+		IP_ADDRESS
+	};
+}

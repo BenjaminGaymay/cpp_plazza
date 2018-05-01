@@ -19,12 +19,6 @@
 #include "macro.hpp"
 
 namespace Plazza {
-	enum Information {
-		PHONE_NUMBER,
-		EMAIL_ADDRESS,
-		IP_ADDRESS
-	};
-
 	class Plazza {
 	public:
 		Plazza();
@@ -41,6 +35,8 @@ namespace Plazza {
 		int m_maxThreads;
 		std::map<Information, std::vector<std::string>> m_map;
 		std::map<std::string, Information> m_convert;
+		std::vector<std::string> m_infos;
+
 		ProcessManager m_procManager;
 	};
 }

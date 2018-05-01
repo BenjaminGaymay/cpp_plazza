@@ -10,6 +10,7 @@
 #include <iostream>
 #include <fstream>
 #include <mutex>
+#include "macro.hpp"
 
 static std::mutex g_write;
 
@@ -19,11 +20,16 @@ namespace Plazza {
 		Log() {};
 		~Log() {};
 
-		static void writeLogs(const std::string &msg) {
+		static void writeLogs(const Information &info, const std::string &msg) {
 			g_write.lock();
+			std::map<Information, std::string> convert = {
+				{PHONE_NUMBER, "Phone number has been found"},
+				{EMAIL_ADDRESS, "Email address has been found"},
+				{IP_ADDRESS, "IP address has been found"}
+			};
 			std::ofstream file("./logs/logs.txt", std::ios_base::app);
 
-			file << msg << std::endl;
+			file << convert[info] << " : " <<msg << std::endl;
 			g_write.unlock();
 		}
 	protected:
