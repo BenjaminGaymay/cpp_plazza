@@ -34,50 +34,6 @@ void Plazza::Plazza::setMaxThreads(const char *maxThreads)
 	} catch (std::invalid_argument &e) { throw e; }
 }
 
-void Plazza::Plazza::getInformationFromString(std::string &information, std::vector<std::string> &words)
-{
-	for (auto &word : words)
-		for (auto &info : m_infos)
-			if (word.find(info) != std::string::npos) {
-				information = word;
-				return;
-			}
-}
-
-void Plazza::Plazza::getFilesFromString(std::vector<std::string> &files, std::vector<std::string> &words)
-{
-	int i = 0;
-
-	files = words;
-	for (auto &file : files) {
-		if (std::find(m_infos.begin(), m_infos.end(), file) != m_infos.end())
-			files.erase(files.begin() + i);
-		++i;
-	}
-}
-
-void Plazza::Plazza::processCommand(std::string &cmd)
-{
-	std::vector<std::string> files;
-	std::vector<std::string> tab;
-	std::string information;
-	pid_t pid;
-
-	tab = StringTools::split(cmd);
-	getInformationFromString(information, tab);
-	getFilesFromString(files, tab);
-	if (information.empty() or files.empty())
-		return;
-	pid = fork();
-	if (pid == ERR_FC)
-		throw std::runtime_error("Error: can't fork the program.");
-	if (pid == CHILD) {
-		m_procManager.setMaxThreads(m_maxThreads);
-		m_procManager.launchThreads(information, files);
-		exit(0);
-	}
-}
-
 void Plazza::Plazza::run()
 {
 	std::vector<std::string> files;
@@ -94,7 +50,7 @@ void Plazza::Plazza::run()
 		std::for_each(tab.begin(), tab.end(), [this](std::string &el) {
 			el = StringTools::rstrip(el);
 			el = StringTools::lstrip(el);
-			processCommand(el);
+			m_commandManager.processCommands(el);
 		});
 	}
 }

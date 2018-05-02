@@ -41,3 +41,36 @@ void Plazza::Parser::getInformation(std::string &information, std::string &fileN
 	}
 	g_file.unlock();
 }
+
+void Plazza::Parser::getInformationFromString(std::string &information, std::vector<std::string> &words)
+{
+	std::vector<std::string> infos = {
+		"EMAIL_ADDRESS",
+		"PHONE_NUMBER",
+		"IP_ADDRESS"
+	};
+
+	for (auto &word : words)
+		for (auto &info : infos)
+			if (word.find(info) != std::string::npos) {
+				information = word;
+				return;
+			};
+}
+
+void Plazza::Parser::getFilesFromString(std::vector<std::string> &files, std::vector<std::string> &words)
+{
+	std::vector<std::string> infos = {
+		"EMAIL_ADDRESS",
+		"PHONE_NUMBER",
+		"IP_ADDRESS"
+	};
+	int i = 0;
+
+	files = words;
+	for (auto &file : files) {
+		if (std::find(infos.begin(), infos.end(), file) != infos.end())
+			files.erase(files.begin() + i);
+		++i;
+	};
+}

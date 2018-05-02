@@ -23,6 +23,7 @@ int main(int ac, char **av)
 
 	if (ac != 2)
 		return (usage(av[0]), ERROR);
+	mkfifo(FIFO_FILE, 0666);
 	try {
 		plazza.setMaxThreads(av[1]);
 		plazza.run();
@@ -30,5 +31,6 @@ int main(int ac, char **av)
 		std::cerr << e.what() << std::endl;
 		ret = ERROR;
 	}
+	unlink(FIFO_FILE);
 	return (ret);
 }

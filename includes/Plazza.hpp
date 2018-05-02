@@ -11,10 +11,7 @@
 #include <iostream>
 #include <vector>
 #include <map>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include "ProcessManager.hpp"
+#include "CommandManager.hpp"
 #include "StringTools.hpp"
 #include "macro.hpp"
 
@@ -27,9 +24,6 @@ namespace Plazza {
 		void run();
 		void setMaxThreads(int);
 		void setMaxThreads(const char *);
-		void getInformationFromString(std::string &, std::vector<std::string> &);
-		void getFilesFromString(std::vector<std::string> &, std::vector<std::string> &);
-		void processCommand(std::string &);
 
 	private:
 		int m_maxThreads;
@@ -37,6 +31,6 @@ namespace Plazza {
 		std::map<std::string, Information> m_convert;
 		std::vector<std::string> m_infos;
 
-		ProcessManager m_procManager;
+		CommandManager m_commandManager;
 	};
 }

@@ -39,3 +39,4 @@ bootstrap
 
 # End of https://www.gitignore.io/api/c++
 logs/logs.txt
+logs/

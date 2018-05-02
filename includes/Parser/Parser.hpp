@@ -24,7 +24,8 @@ namespace Plazza {
 		~Parser();
 
 		void getInformation(std::string &information, std::string &fileName);
-		void test(std::string);
+		void getInformationFromString(std::string &, std::vector<std::string> &);
+		void getFilesFromString(std::vector<std::string> &, std::vector<std::string> &);
 
 	private:
 		std::map<std::string, std::string> m_pattern;
