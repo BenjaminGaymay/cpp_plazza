@@ -39,10 +39,6 @@ void Plazza::CommandManager::processCommands(std::string &cmd)
 	if (pid == CHILD) {
 		m_procManager.setMaxThreads(m_maxThreads);
 		m_procManager.launchThreads(information, files);
-		m_fifo.write(a);
-		std::cout << "wut" << std::endl;
 		exit(0);
 	}
-	sleep(2);
-	std::cout << m_fifo.read() << std::endl;
 }
