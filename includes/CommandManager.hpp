@@ -12,7 +12,7 @@
 #include <unistd.h>
 #include "Parser.hpp"
 #include "StringTools.hpp"
-#include "ProcessManager.hpp"
+#include "ThreadsManager.hpp"
 
 namespace Plazza {
 	class CommandManager {
@@ -24,6 +24,6 @@ namespace Plazza {
 			void setMaxThreads(int);
 		private:
 			int m_maxThreads;
-			ProcessManager m_procManager;
+			ThreadsManager m_procManager;
 	};
 }

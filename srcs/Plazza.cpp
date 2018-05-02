@@ -47,10 +47,10 @@ void Plazza::Plazza::run()
 		if (line == "exit")
 			break;
 		tab = StringTools::split(line, ";");
-		std::for_each(tab.begin(), tab.end(), [this](std::string &el) {
+		for (auto &el : tab) {
 			el = StringTools::rstrip(el);
 			el = StringTools::lstrip(el);
 			m_commandManager.processCommands(el);
-		});
+		}
 	}
 }
