@@ -23,12 +23,12 @@ bool Plazza::ProcessManager::launchThreads(std::string &information, std::vector
 {
 	Parser parser;
 	std::string info;
-	std::vector<std::thread> th;
+	std::vector<std::thread> threads;
 
 	for (auto &file : files) {
-		th.emplace_back(&Plazza::Parser::getInformation, parser, std::ref(information), std::ref(file));
+		threads.push_back(std::thread(&Plazza::Parser::getInformation, parser, std::ref(information), std::ref(file)));
 	}
-	for (auto &c : th) {
+	for (auto &c : threads) {
 		c.join();
 	}
 	return true;

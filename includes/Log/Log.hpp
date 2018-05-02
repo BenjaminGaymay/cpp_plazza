@@ -22,7 +22,6 @@ namespace Plazza {
 		~Log();
 
 		static void writeLogs(const Information &, const std::string &);
-	protected:
 	private:
 	};
 }

@@ -85,7 +85,6 @@ void Plazza::Plazza::run()
 	std::vector<std::string> tab;
 	std::string information;
 
-	mkfifo(FIFO_FILE, 777);
 	if (m_maxThreads <= 0)
 		throw std::runtime_error("Error: n° of threads must be superior to 0.");
 	for (std::string line; std::getline(std::cin, line);) {
@@ -98,5 +97,4 @@ void Plazza::Plazza::run()
 			processCommand(el);
 		});
 	}
-	unlink(FIFO_FILE);
 }

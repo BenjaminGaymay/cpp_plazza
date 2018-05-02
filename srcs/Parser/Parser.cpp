@@ -41,8 +41,3 @@ void Plazza::Parser::getInformation(std::string &information, std::string &fileN
 	}
 	g_file.unlock();
 }
-
-void Plazza::Parser::test(std::string a)
-{
-	std::cout << a << " mdr" << std::endl;
-}
