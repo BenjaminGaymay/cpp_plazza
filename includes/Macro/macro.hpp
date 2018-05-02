@@ -13,7 +13,7 @@
 #define FAILURE 1
 #define ERR_FC -1
 
-#define FIFO_FILE "/tmp/myfifo"
+#define FIFO_FILE ".tmp/plazza_fifo"
 
 namespace Plazza {
 	enum Information {

@@ -43,7 +43,7 @@ void Plazza::Plazza::run()
 
 	if (m_maxThreads <= 0)
 		throw std::runtime_error("Error: n° of threads must be superior to 0.");
-	Fifo::open(FIFO_FILE);
+	// Fifo::open(FIFO_FILE);
 	for (std::string line; std::getline(std::cin, line);) {
 		if (line == "exit")
 			break;
@@ -54,5 +54,5 @@ void Plazza::Plazza::run()
 			m_commandManager.processCommands(el);
 		}
 	}
-	Fifo::unlink(FIFO_FILE);
+	// Fifo::unlink(FIFO_FILE);
 }

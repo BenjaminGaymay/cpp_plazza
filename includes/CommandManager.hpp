@@ -26,5 +26,6 @@ namespace Plazza {
 		private:
 			int m_maxThreads;
 			ThreadsManager m_procManager;
+			Fifo m_fifo;
 	};
 }
