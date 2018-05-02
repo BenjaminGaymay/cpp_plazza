@@ -12,6 +12,7 @@
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include "macro.hpp"
 
 namespace Plazza {
 	class Fifo {
@@ -19,13 +20,13 @@ namespace Plazza {
 			Fifo();
 			~Fifo();
 
-			void writeInFifo(std::string &);
-			std::string readInFifo();
+			static void open(std::string);
+			static void unlink(std::string);
+			void write(std::string &);
+			std::string read();
 			std::string getFileName() const;
-			int getFd() const;
 
 		private:
 			std::string m_file;
-			int m_fd;
 	};
 }

@@ -13,6 +13,7 @@
 #include "Parser.hpp"
 #include "StringTools.hpp"
 #include "ThreadsManager.hpp"
+#include "Fifo.hpp"
 
 namespace Plazza {
 	class CommandManager {

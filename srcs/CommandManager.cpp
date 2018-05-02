@@ -24,7 +24,9 @@ void Plazza::CommandManager::processCommands(std::string &cmd)
 	std::vector<std::string> tab;
 	std::string information;
 	Parser parser;
+	Fifo fifo;
 	pid_t pid;
+	std::string a("salut");
 
 	tab = StringTools::split(cmd);
 	parser.getInformationFromString(information, tab);
@@ -37,6 +39,8 @@ void Plazza::CommandManager::processCommands(std::string &cmd)
 	if (pid == CHILD) {
 		m_procManager.setMaxThreads(m_maxThreads);
 		m_procManager.launchThreads(information, files);
+		fifo.write(a);
 		exit(0);
 	}
+	std::cout << fifo.read() << std::endl;
 }
