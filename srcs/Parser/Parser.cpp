@@ -11,7 +11,7 @@ Plazza::Parser::Parser()
 {
 	m_pattern["EMAIL_ADDRESS"] = "(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))";
 	m_pattern["IP_ADDRESS"] = "(\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})";
-	m_pattern["PHONE_NUMBER"] = "(\\d{10})";
+	m_pattern["PHONE_NUMBER"] = "(\\d{10})|((\\d{2} ){4}\\d{2})|((\\d{2}\\.){4}\\d{2})";
 
 	m_convert["PHONE_NUMBER"] = PHONE_NUMBER;
 	m_convert["EMAIL_ADDRESS"] = EMAIL_ADDRESS;
@@ -32,11 +32,8 @@ void Plazza::Parser::getInformation(std::string &information, std::string &fileN
 	if (file.is_open()) {
 		while (std::getline(file, line)) {
 			if (std::regex_search(line, matches, pattern)) {
-				for (auto match : matches) {
-					Log::writeLogs(m_convert[information], match);
-					std::cout << match << std::endl;
-				}
-
+				Log::writeLogs(m_convert[information], matches[0]);
+				std::cout << matches[0] << std::endl;
 			}
 		}
 	} else {
