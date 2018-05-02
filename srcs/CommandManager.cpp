@@ -7,7 +7,8 @@
 
 #include "CommandManager.hpp"
 
-Plazza::CommandManager::CommandManager()
+Plazza::CommandManager::CommandManager() :
+	m_maxThreads(0), m_procManager(), m_fifo()
 {}
 
 Plazza::CommandManager::~CommandManager()
@@ -24,7 +25,6 @@ void Plazza::CommandManager::processCommands(std::string &cmd)
 	std::vector<std::string> tab;
 	std::string information;
 	Parser parser;
-	Fifo fifo;
 	pid_t pid;
 	std::string a("salut");
 
@@ -39,8 +39,10 @@ void Plazza::CommandManager::processCommands(std::string &cmd)
 	if (pid == CHILD) {
 		m_procManager.setMaxThreads(m_maxThreads);
 		m_procManager.launchThreads(information, files);
-		fifo.write(a);
+		m_fifo.write(a);
+		std::cout << "wut" << std::endl;
 		exit(0);
 	}
-	std::cout << fifo.read() << std::endl;
+	sleep(2);
+	std::cout << m_fifo.read() << std::endl;
 }

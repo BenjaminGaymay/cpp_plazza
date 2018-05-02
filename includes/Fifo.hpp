@@ -12,6 +12,7 @@
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <dirent.h>
 #include "macro.hpp"
 
 namespace Plazza {
@@ -20,11 +21,12 @@ namespace Plazza {
 			Fifo();
 			~Fifo();
 
-			static void open(std::string);
-			static void unlink(std::string);
+			static void openFile(std::string);
+			static void unlinkFile(std::string);
 			void write(std::string &);
 			std::string read();
 			std::string getFileName() const;
+			void deleteOldFile() const;
 
 		private:
 			std::string m_file;
