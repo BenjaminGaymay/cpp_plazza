@@ -13,7 +13,8 @@ Plazza::Log::Log()
 Plazza::Log::~Log()
 {}
 
-void Plazza::Log::writeLogs(const Information &info, const std::string &msg) {
+void Plazza::Log::writeLogs(const Information &info, const std::string &msg)
+{
 	g_write.lock();
 	std::map<Information, std::string> convert = {
 		{PHONE_NUMBER, "Phone number has been found"},

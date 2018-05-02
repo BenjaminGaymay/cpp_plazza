@@ -37,6 +37,7 @@ void Plazza::Parser::getInformation(std::string &information, std::string &fileN
 			}
 		}
 	} else {
+		std::cerr << "Error: bad file." << std::endl;
 	}
 	g_file.unlock();
 }
