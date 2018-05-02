@@ -26,6 +26,7 @@ namespace Plazza {
 		~ProcessManager();
 
 		void setMaxThreads(int);
+		int getMaxThreads() { return m_maxThreads; }
 		bool launchThreads(std::string &, std::vector<std::string> &);
 
 	private:
