@@ -2,7 +2,7 @@
 ** EPITECH PROJECT, 2018
 ** cpp_plazza
 ** File description:
-** ProcessManager
+** ThreadsManager
 */
 
 #pragma once
@@ -20,10 +20,10 @@
 #include "Log.hpp"
 
 namespace Plazza {
-	class ProcessManager {
+	class ThreadsManager {
 	public:
-		ProcessManager();
-		~ProcessManager();
+		ThreadsManager();
+		~ThreadsManager();
 
 		void setMaxThreads(int);
 		int getMaxThreads() { return m_maxThreads; }

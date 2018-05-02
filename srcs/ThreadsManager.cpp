@@ -2,24 +2,24 @@
 ** EPITECH PROJECT, 2018
 ** cpp_plazza
 ** File description:
-** ProcessManager
+** ThreadsManager
 */
 
-#include "ProcessManager.hpp"
+#include "ThreadsManager.hpp"
 
-Plazza::ProcessManager::ProcessManager() :
+Plazza::ThreadsManager::ThreadsManager() :
 	m_maxThreads(0), m_currThreads(0)
 {}
 
-Plazza::ProcessManager::~ProcessManager()
+Plazza::ThreadsManager::~ThreadsManager()
 {}
 
-void Plazza::ProcessManager::setMaxThreads(int max)
+void Plazza::ThreadsManager::setMaxThreads(int max)
 {
 	m_maxThreads = max;
 }
 
-bool Plazza::ProcessManager::launchThreads(std::string &information, std::vector<std::string> &files)
+bool Plazza::ThreadsManager::launchThreads(std::string &information, std::vector<std::string> &files)
 {
 	Parser parser;
 	std::string info;

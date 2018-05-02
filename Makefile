@@ -6,9 +6,11 @@ RM	= rm -f
 
 SRCS	= ./main.cpp			\
 	  ./srcs/Plazza.cpp		\
-	  ./srcs/ProcessManager.cpp	\
+	  ./srcs/ThreadsManager.cpp	\
 	  ./srcs/Parser/Parser.cpp	\
-	  ./srcs/Log/Log.cpp
+	  ./srcs/Log/Log.cpp		\
+	  ./srcs/CommandManager.cpp	\
+	  ./srcs/Fifo.cpp
 
 OBJS	= $(SRCS:.cpp=.o)
 
