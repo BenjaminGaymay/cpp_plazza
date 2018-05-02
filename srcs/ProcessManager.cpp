@@ -23,15 +23,15 @@ bool Plazza::ProcessManager::launchThreads(std::string &information, std::vector
 {
 	Parser parser;
 	std::string info;
-	std::vector<std::thread> th;
+	std::vector<std::thread> threads;
 
 	for (auto &file : files) {
 		if (m_currThreads >= m_maxThreads)
 			break ;
 		m_currThreads += 1;
-		th.emplace_back(&Plazza::Parser::getInformation, parser, std::ref(information), std::ref(file));
+		threads.push_back(std::thread(&Plazza::Parser::getInformation, parser, std::ref(information), std::ref(file)));
 	}
-	for (auto &c : th)
+	for (auto &c : threads)
 		c.join();
 
 	m_currThreads = 0;
