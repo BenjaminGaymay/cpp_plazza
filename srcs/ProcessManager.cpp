@@ -26,10 +26,17 @@ bool Plazza::ProcessManager::launchThreads(std::string &information, std::vector
 	std::vector<std::thread> th;
 
 	for (auto &file : files) {
+		if (m_currThreads >= m_maxThreads)
+			break ;
+		m_currThreads += 1;
 		th.emplace_back(&Plazza::Parser::getInformation, parser, std::ref(information), std::ref(file));
 	}
-	for (auto &c : th) {
+	for (auto &c : th)
 		c.join();
-	}
+
+	m_currThreads = 0;
+	files.erase(files.begin(), files.begin() + m_maxThreads);
+	if (files.empty() == false)
+		launchThreads(information, files);
 	return true;
 }
