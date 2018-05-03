@@ -23,7 +23,7 @@ Plazza::Parser::~Parser()
 
 void Plazza::Parser::getInformation(std::string &information, std::string &fileName)
 {
-	g_file.lock();
+	std::lock_guard<std::mutex> lockGuard(g_file);
 	std::fstream file(fileName);
 	std::string line;
 	std::smatch matches;
@@ -39,7 +39,6 @@ void Plazza::Parser::getInformation(std::string &information, std::string &fileN
 	} else {
 		std::cerr << "Error: bad file." << std::endl;
 	}
-	g_file.unlock();
 }
 
 void Plazza::Parser::getInformationFromString(std::string &information, std::vector<std::string> &words)
