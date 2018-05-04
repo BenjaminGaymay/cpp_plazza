@@ -11,6 +11,7 @@
 #include <iostream>
 #include <thread>
 #include <future>
+#include <signal.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -28,9 +29,12 @@ namespace Plazza {
 		void setMaxThreads(int);
 		int getMaxThreads() { return m_maxThreads; }
 		bool launchThreads(std::string &, std::vector<std::string> &);
+		static void quit_child(int);
+		static void init_alarm_catch();
 
 	private:
 		int m_maxThreads;
 		int m_currThreads;
+		std::vector<std::thread> _threads;
 	};
 }

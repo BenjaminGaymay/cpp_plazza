@@ -23,7 +23,7 @@ namespace Plazza {
 		Parser();
 		~Parser();
 
-		void getInformation(std::string &information, std::string &fileName);
+		void getInformation(std::string &information, std::vector<std::string> &files);
 		void getInformationFromString(std::string &, std::vector<std::string> &);
 		void getFilesFromString(std::vector<std::string> &, std::vector<std::string> &);
 

@@ -9,7 +9,7 @@
 
 Plazza::Parser::Parser()
 {
-	m_pattern["EMAIL_ADDRESS"] = "(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))";
+	m_pattern["EMAIL_ADDRESS"] = "[a-zA-Z0-9_.-]+@[a-zA-Z0-9_.-]+";
 	m_pattern["IP_ADDRESS"] = "(\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})";
 	m_pattern["PHONE_NUMBER"] = "(\\d{10})|((\\d{2} ){4}\\d{2})";
 
@@ -21,9 +21,20 @@ Plazza::Parser::Parser()
 Plazza::Parser::~Parser()
 {}
 
-void Plazza::Parser::getInformation(std::string &information, std::string &fileName)
+void Plazza::Parser::getInformation(std::string &information, std::vector<std::string> &files)
 {
-	std::lock_guard<std::mutex> lockGuard(g_file);
+	std::string fileName;
+
+	while (1) {
+		g_file.lock();
+		if (!files.empty()) {
+			fileName = files[0];
+			files.erase(files.begin());
+			g_file.unlock();
+			break;
+		}
+		g_file.unlock();
+	}
 	std::fstream file(fileName);
 	std::string line;
 	std::smatch matches;
@@ -39,6 +50,7 @@ void Plazza::Parser::getInformation(std::string &information, std::string &fileN
 	} else {
 		std::cerr << "Error: bad file." << std::endl;
 	}
+	getInformation(information, files);
 }
 
 void Plazza::Parser::getInformationFromString(std::string &information, std::vector<std::string> &words)
