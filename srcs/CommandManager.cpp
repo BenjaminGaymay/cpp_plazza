@@ -19,6 +19,13 @@ void Plazza::CommandManager::setMaxThreads(int max)
 	m_maxThreads = max;
 }
 
+void Plazza::CommandManager::divideProcessus(std::vector<std::string> &files, std::string &information)
+{
+	files = files;
+	information = information;
+	exit(0);
+}
+
 std::vector<std::string> Plazza::CommandManager::processCommands(std::string &cmd)
 {
 	std::vector<std::string> files;
@@ -47,7 +54,7 @@ std::vector<std::string> Plazza::CommandManager::processCommands(std::string &cm
 		if (s == "Error")
 			break;
 		else if (s == "Max threads") {
-			exit(0);
+			divideProcessus(files, information);
 		} else
 			res.push_back(s);
 	}

@@ -23,6 +23,7 @@ namespace Plazza {
 
 			std::vector<std::string> processCommands(std::string &);
 			void setMaxThreads(int);
+			void divideProcessus(std::vector<std::string> &, std::string &);
 		private:
 			int m_maxThreads;
 			ThreadsManager m_procManager;
