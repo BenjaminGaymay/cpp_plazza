@@ -46,18 +46,7 @@ void Plazza::Plazza::run()
 	if (m_maxThreads <= 0)
 		throw std::runtime_error("Error: n° of threads must be superior to 0.");
 	m_commandManager.setMaxThreads(m_maxThreads);
-
 	menu.openWindow();
 	PlazzaSfml::startLoop(menu, m_infos, m_commandManager);
 	menu.closeWindow();
-	// for (std::string line; std::getline(std::cin, line);) {
-	// 	if (line == "exit")
-	// 		break;
-	// 	tab = StringTools::split(line, ";");
-	// 	for (auto &el : tab) {
-	// 		el = StringTools::rstrip(el);
-	// 		el = StringTools::lstrip(el);
-	// 		m_commandManager.processCommands(el);
-	// 	}
-	// }
 }

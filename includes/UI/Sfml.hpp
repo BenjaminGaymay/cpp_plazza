@@ -102,6 +102,7 @@ namespace Plazza {
 			char *_pwd;
 			std::string _sPwd;
 			std::string _selectInfo;
+			std::vector<std::string> _results;
 			std::pair<int, int> _mousePos;
 	};
 }

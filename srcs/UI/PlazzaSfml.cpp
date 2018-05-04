@@ -50,38 +50,54 @@ int Plazza::PlazzaSfml::showObjects(Sfml &menu, std::vector<SfmlText> &objects, 
 	sf::FloatRect textPos;
 	std::string cmd;
 
-	for (auto &object : objects) {
-		textPos = menu.drawText(object.getText(), object.getX(), object.getY(), object.getColor());
-		if (menu.isPosInText(mousePos, textPos)) {
-			switch (object._onClick(object)) {
-				case SfmlText::CHANGEDIR:
-					free(_pwd);
-					_pwd = getcwd(NULL, 0);
-					_sPwd = std::string(_pwd) + "/";
-					break;
-				case SfmlText::ADDFILE:
-					_selectedFiles.push_back(object.getText());
-					_realPathFile.push_back(realpath(object.getText().c_str(), NULL));
-					break;
-				case SfmlText::RMFILE:
-					index = std::find(_realPathFile.begin(), _realPathFile.end(), (_sPwd + object.getText()).c_str());
-					if (index != _realPathFile.end()) {
-						_selectedFiles.erase(_selectedFiles.begin() + std::distance(_realPathFile.begin(), index));
-						_realPathFile.erase(index);
-					}
-					break;
-				case SfmlText::INFO:
-					_selectInfo = object.getText();
-					break;
-				case SfmlText::VALIDATE:
-					for (auto file : _realPathFile)
-						cmd += file + ' ';
-					cmd += _selectInfo;
-					m_commandManager.processCommands(cmd);
-					return state = 1;
-				case SfmlText::BACK:
-					return state = 0;
+	if (state == 0) {
+		for (auto &object : objects) {
+			textPos = menu.drawText(object.getText(), object.getX(), object.getY(), object.getColor());
+			if (menu.isPosInText(mousePos, textPos)) {
+				switch (object._onClick(object)) {
+					case SfmlText::CHANGEDIR:
+						free(_pwd);
+						_pwd = getcwd(NULL, 0);
+						_sPwd = std::string(_pwd) + "/";
+						break;
+					case SfmlText::ADDFILE:
+						_selectedFiles.push_back(object.getText());
+						_realPathFile.push_back(realpath(object.getText().c_str(), NULL));
+						break;
+					case SfmlText::RMFILE:
+						index = std::find(_realPathFile.begin(), _realPathFile.end(), (_sPwd + object.getText()).c_str());
+						if (index != _realPathFile.end()) {
+							_selectedFiles.erase(_selectedFiles.begin() + std::distance(_realPathFile.begin(), index));
+							_realPathFile.erase(index);
+						}
+						break;
+					case SfmlText::INFO:
+						_selectInfo = object.getText();
+						break;
+					case SfmlText::VALIDATE:
+						for (auto file : _realPathFile)
+							cmd += file + ' ';
+						cmd += _selectInfo;
+						_results = m_commandManager.processCommands(cmd);
+						return state = 1;
+				}
 			}
+		}
+	} else {
+		int y = 1;
+		for (auto result : _results) {
+			if (y > 20)
+				break;
+			objects.push_back(SfmlText(5, y, sf::Color::Magenta, result, SfmlText::noop));
+			y++;
+		}
+		for (auto &object : objects) {
+			textPos = menu.drawText(object.getText(), object.getX(), object.getY(), object.getColor());
+			if (menu.isPosInText(mousePos, textPos))
+				switch (object._onClick(object)) {
+					case SfmlText::BACK:
+						return state = 0;
+				}
 		}
 	}
 	return state;

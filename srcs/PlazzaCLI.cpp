@@ -39,6 +39,7 @@ void Plazza::Plazza::run()
 	std::vector<std::string> files;
 	std::vector<std::string> words;
 	std::vector<std::string> tab;
+	std::vector<std::string> results;
 	std::string information;
 
 	if (m_maxThreads <= 0)
@@ -51,7 +52,11 @@ void Plazza::Plazza::run()
 		for (auto &el : tab) {
 			el = StringTools::rstrip(el);
 			el = StringTools::lstrip(el);
-			m_commandManager.processCommands(el);
+			results = m_commandManager.processCommands(el);
+			if (results.empty())
+				std::cout << "VIDE" << std::endl;
+			for (auto result : results)
+				std::cout << result << std::endl;
 		}
 	}
 }

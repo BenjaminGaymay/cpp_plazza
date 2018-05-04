@@ -156,8 +156,6 @@ bool N_Sfml::isPosInText(std::pair<int, int> &mousePos, sf::FloatRect &textPos)
 	int xMax = xMin + textPos.width;
 	int yMax = yMin + _sy;
 
-	if (mousePos.first != -1)
-		std::cout << mousePos.first << ':' << mousePos.second << std::endl;
 	if (mousePos.first >= xMin and mousePos.first <= xMax and
 	mousePos.second >= yMin and mousePos.second <= yMax)
 		return true;
