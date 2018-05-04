@@ -9,7 +9,7 @@
 
 Plazza::Parser::Parser()
 {
-	m_pattern["EMAIL_ADDRESS"] = "(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))";
+	m_pattern["EMAIL_ADDRESS"] = "[a-zA-Z0-9_.-]+@[a-zA-Z0-9_.-]+";
 	m_pattern["IP_ADDRESS"] = "(\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})";
 	m_pattern["PHONE_NUMBER"] = "(\\d{10})|((\\d{2} ){4}\\d{2})";
 
@@ -29,15 +29,17 @@ void Plazza::Parser::getInformation(std::string &information, std::string &fileN
 	std::smatch matches;
 	std::regex pattern(m_pattern[information]);
 	Fifo fifo;
+	std::string res;
 
 	if (file.is_open()) {
 		while (std::getline(file, line)) {
 			if (std::regex_search(line, matches, pattern)) {
 				Log::writeLogs(m_convert[information], matches[0]);
 				std::cout << matches[0] << std::endl;
-				fifo.write(matches[0]);
+				res += matches[0];
 			}
 		}
+		fifo.write(res);
 	} else {
 		std::cerr << "Error: bad file." << std::endl;
 		fifo.write("Error");
@@ -62,6 +64,8 @@ void Plazza::Parser::getInformationFromString(std::string &information, std::vec
 
 void Plazza::Parser::getFilesFromString(std::vector<std::string> &files, std::vector<std::string> &words)
 {
+	std::ifstream fst;
+	std::vector<std::string> tmp;
 	std::vector<std::string> infos = {
 		"EMAIL_ADDRESS",
 		"PHONE_NUMBER",
@@ -69,10 +73,20 @@ void Plazza::Parser::getFilesFromString(std::vector<std::string> &files, std::ve
 	};
 	int i = 0;
 
-	files = words;
-	for (auto &file : files) {
-		if (std::find(infos.begin(), infos.end(), file) != infos.end())
-			files.erase(files.begin() + i);
+	tmp = words;
+	for (auto &file : tmp) {
+		if (std::find(infos.begin(), infos.end(), file) != infos.end()) {
+			tmp.erase(tmp.begin() + i);
+			break;
+		}
 		++i;
-	};
+	}
+
+	for (auto &t : tmp) {
+		fst.open(t);
+		if (fst.good()) {
+			files.push_back(t);
+			fst.close();
+		}
+	}
 }

@@ -24,6 +24,7 @@ bool Plazza::ThreadsManager::launchThreads(std::string &information, std::vector
 	Parser parser;
 	std::string info;
 	std::vector<std::thread> threads;
+	std::ifstream f;
 	Fifo fifo;
 
 
