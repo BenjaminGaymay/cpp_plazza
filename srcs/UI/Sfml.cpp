@@ -45,12 +45,13 @@ void N_Sfml::loadTexture(const std::string &path)
 	_texture.push_back(texture);
 }
 
-void N_Sfml::drawText(const std::string &text, const int &x, const int &y, const sf::Color &color)
+sf::FloatRect N_Sfml::drawText(const std::string &text, const int &x, const int &y, const sf::Color &color)
 {
 	_text.setString(text);
 	_text.setFillColor(color);
 	_text.setPosition(sf::Vector2f(x*_sx, y*_sy));
 	_window.draw(_text);
+	return _text.getGlobalBounds();
 }
 
 bool N_Sfml::isOpen()
@@ -148,13 +149,15 @@ std::pair<int, int> N_Sfml::getMousePos()
 	return pos;
 }
 
-bool N_Sfml::isPosInText(const std::pair<int, int> &mousePos, int x, int y, const std::string text)
+bool N_Sfml::isPosInText(std::pair<int, int> &mousePos, sf::FloatRect &textPos)
 {
-	int xMin = x * _sx;
-	int yMin = y * _sy;
-	int xMax = xMin + text.size() * _sx;
+	int xMin = textPos.left;
+	int yMin = textPos.top;
+	int xMax = xMin + textPos.width;
 	int yMax = yMin + _sy;
 
+	if (mousePos.first != -1)
+		std::cout << mousePos.first << ':' << mousePos.second << std::endl;
 	if (mousePos.first >= xMin and mousePos.first <= xMax and
 	mousePos.second >= yMin and mousePos.second <= yMax)
 		return true;

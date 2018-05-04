@@ -5,10 +5,8 @@
 ** Plazza
 */
 
-#include <sys/stat.h>
 #include "Plazza.hpp"
 #include "Sfml.hpp"
-#include "Menu.hpp"
 
 Plazza::Plazza::Plazza()
 {
@@ -49,82 +47,9 @@ void Plazza::Plazza::run()
 		throw std::runtime_error("Error: n° of threads must be superior to 0.");
 	m_commandManager.setMaxThreads(m_maxThreads);
 
-	std::vector<std::string> ls;
-	std::vector<std::string> selectedFiles;
-	std::vector<std::string> realPathFile;
-	std::vector<SfmlText> objects;
-	std::vector<std::string>::iterator index;
-	std::string selectInfo;
-	sf::Color color;
-	struct stat buf;
-	int y = 2;
-
 	menu.openWindow();
-	std::pair<int, int> mousePos;
-	while (true) {
-		ls = Menu::listFiles();
-		y = 2;
-		objects.push_back(SfmlText(3, 0, sf::Color::Blue, "..", SfmlText::directory));
-		for (auto file : ls) {
-			stat(file.c_str(), &buf);
-			color = (S_ISDIR(buf.st_mode) ? sf::Color::Blue : sf::Color::White);
-			for (auto select : selectedFiles) {
-				if (file.compare(select) == 0) {
-					color = sf::Color::Green;
-					break;
-				}
-			}
-			objects.push_back(SfmlText(3, y, color, file, S_ISDIR(buf.st_mode) ? SfmlText::directory : SfmlText::regularFile));
-			y++;
-		}
-
-		y = 25;
-		for (auto file : realPathFile) {
-			objects.push_back(SfmlText(20, y, sf::Color::White, file, SfmlText::noop));
-			y++;
-		}
-
-		y = 5;
-		for (auto info : m_infos) {
-			objects.push_back(SfmlText(20, y, (info.compare(selectInfo) == 0 ? sf::Color::Cyan : sf::Color::White), info, SfmlText::info));
-			y++;
-		}
-
-		objects.push_back(SfmlText(30, 30, sf::Color::Magenta, "Validate", SfmlText::validate));
-
-		mousePos = menu.getMousePos();
-		menu.clearWindow();
-		for (auto &object : objects) {
-			if (menu.isPosInText(mousePos, object.getX(), object.getY(), object.getText())) {
-				switch (object._onClick(object)) {
-					case SfmlText::ADDFILE:
-						selectedFiles.push_back(object.getText());
-						realPathFile.push_back(realpath(object.getText().c_str(), NULL));
-						break;
-					case SfmlText::RMFILE:
-						index = std::find(selectedFiles.begin(), selectedFiles.end(), object.getText());
-						if (index != selectedFiles.end()) {
-							realPathFile.erase(realPathFile.begin() + std::distance(selectedFiles.begin(), index));
-    							selectedFiles.erase(index);
-						}
-						break;
-					case SfmlText::INFO:
-						selectInfo = object.getText();
-						break;
-					case SfmlText::VALIDATE:
-						std::string cmd;
-
-						for (auto file : realPathFile)
-							cmd += file + ' ';
-						cmd += selectInfo;
-						m_commandManager.processCommands(cmd);
-				}
-			}
-			menu.drawText(object.getText(), object.getX(), object.getY(), object.getColor());
-		}
-		menu.refreshWindow();
-		objects.clear();
-	}
+	PlazzaSfml::startLoop(menu, m_infos, m_commandManager);
+	menu.closeWindow();
 	// for (std::string line; std::getline(std::cin, line);) {
 	// 	if (line == "exit")
 	// 		break;

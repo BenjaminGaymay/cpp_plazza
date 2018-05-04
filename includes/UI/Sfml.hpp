@@ -9,6 +9,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include "CommandManager.hpp"
 #include <unistd.h>
 
 namespace Plazza {
@@ -17,7 +18,7 @@ namespace Plazza {
 		Sfml();
 		~Sfml();
 
-		void drawText(const std::string &, const int &, const int &, const sf::Color &);
+		sf::FloatRect drawText(const std::string &, const int &, const int &, const sf::Color &);
 		void drawSquare(const int &, const int &, const sf::Color &);
 		void clearWindow();
 		void refreshWindow();
@@ -32,7 +33,7 @@ namespace Plazza {
 		bool isOpen();
 		void loadTexture(const std::string &);
 		void drawMenu();
-		bool isPosInText(const std::pair<int, int> &, int, int, const std::string);
+		bool isPosInText(std::pair<int, int> &, sf::FloatRect &);
 
 	private:
 		int _width;
@@ -57,10 +58,12 @@ namespace Plazza {
 		public:
 			enum Click {
 				NONE,
+				CHANGEDIR,
 				ADDFILE,
 				RMFILE,
 				INFO,
-				VALIDATE
+				VALIDATE,
+				BACK
 			};
 			SfmlText(const int x, const int y, const sf::Color color, const std::string text, int (*onClick)(SfmlText &)) :
 				_x(x), _y(y), _color(color), _text(text), _onClick(onClick) {}
@@ -72,10 +75,11 @@ namespace Plazza {
 			void setY(const int newY) { _y = newY; }
 			void setColor(const sf::Color newColor) { _color = newColor; }
 			static int regularFile(SfmlText &object) { return (object.getColor() == sf::Color::White ? ADDFILE : RMFILE); }
-			static int directory(SfmlText &object) { chdir(object.getText().c_str()); return NONE; }
+			static int directory(SfmlText &object) { chdir(object.getText().c_str()); return CHANGEDIR; }
 			static int noop(SfmlText &object) { (void)object; return NONE; }
 			static int info(SfmlText &object) { (void)object; return INFO; }
 			static int validate(SfmlText &object) { (void)object; return VALIDATE; }
+			static int back(SfmlText &object) { (void)object; return BACK; }
 		private:
 			int _x;
 			int _y;
@@ -83,5 +87,21 @@ namespace Plazza {
 			std::string _text;
 		public:
 			int (*_onClick)(SfmlText &);
+	};
+
+	class PlazzaSfml {
+		public:
+			PlazzaSfml() : _pwd(getcwd(NULL, 0)), _sPwd(std::string(_pwd) + "/") {}
+			void addList(std::vector<SfmlText> &);
+			void addInfos(std::vector<SfmlText> &, std::vector<std::string> &);
+			int showObjects(Sfml &, std::vector<SfmlText> &, CommandManager &, std::pair<int, int> &);
+			static void startLoop(Sfml &, std::vector<std::string> &, CommandManager &);
+		private:
+			std::vector<std::string> _selectedFiles;
+			std::vector<std::string> _realPathFile;
+			char *_pwd;
+			std::string _sPwd;
+			std::string _selectInfo;
+			std::pair<int, int> _mousePos;
 	};
 }

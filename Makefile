@@ -6,8 +6,9 @@ RM	= rm -f
 
 CLISRCS	= ./srcs/PlazzaCLI.cpp
 
-UISRCS	= ./srcs/PlazzaUI.cpp	\
-	  ./srcs/UI/Sfml.cpp	\
+UISRCS	= ./srcs/PlazzaUI.cpp		\
+	  ./srcs/UI/Sfml.cpp		\
+	  ./srcs/UI/PlazzaSfml.cpp	\
 	  ./srcs/UI/Menu.cpp
 
 SRCS	= ./main.cpp			\
