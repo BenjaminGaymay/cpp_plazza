@@ -21,7 +21,7 @@ namespace Plazza {
 			CommandManager();
 			~CommandManager();
 
-			void processCommands(std::string &);
+			std::vector<std::string> processCommands(std::string &);
 			void setMaxThreads(int);
 		private:
 			int m_maxThreads;

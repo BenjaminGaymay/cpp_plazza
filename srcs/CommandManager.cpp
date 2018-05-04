@@ -19,10 +19,11 @@ void Plazza::CommandManager::setMaxThreads(int max)
 	m_maxThreads = max;
 }
 
-void Plazza::CommandManager::processCommands(std::string &cmd)
+std::vector<std::string> Plazza::CommandManager::processCommands(std::string &cmd)
 {
 	std::vector<std::string> files;
 	std::vector<std::string> tab;
+	std::vector<std::string> res;
 	std::string information;
 	std::string s;
 	Parser parser;
@@ -32,7 +33,7 @@ void Plazza::CommandManager::processCommands(std::string &cmd)
 	parser.getInformationFromString(information, tab);
 	parser.getFilesFromString(files, tab);
 	if (information.empty() or files.empty())
-		return;
+		return res;
 	pid = fork();
 	if (pid == ERR_FC)
 		throw std::runtime_error("Error: can't fork the program.");
@@ -47,6 +48,8 @@ void Plazza::CommandManager::processCommands(std::string &cmd)
 			break;
 		else if (s == "Max threads") {
 			exit(0);
-		}
+		} else
+			res.push_back(s);
 	}
+	return res;
 }
