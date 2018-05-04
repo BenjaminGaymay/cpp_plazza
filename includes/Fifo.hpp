@@ -21,12 +21,12 @@ namespace Plazza {
 			Fifo();
 			~Fifo();
 
-			static void openFile(std::string);
+			static void mkFifo(std::string);
 			static void unlinkFile(std::string);
-			void write(std::string &);
+			void write(std::string);
 			std::string read();
 			std::string getFileName() const;
-			void deleteOldFile() const;
+			static void deleteOldFile();
 
 		private:
 			std::string m_file;

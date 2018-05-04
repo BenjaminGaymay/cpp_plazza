@@ -14,6 +14,7 @@
 #include <mutex>
 #include "Log.hpp"
 #include "macro.hpp"
+#include "Fifo.hpp"
 
 static std::mutex g_file;
 

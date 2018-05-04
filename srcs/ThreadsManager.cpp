@@ -24,7 +24,11 @@ bool Plazza::ThreadsManager::launchThreads(std::string &information, std::vector
 	Parser parser;
 	std::string info;
 	std::vector<std::thread> threads;
+	Fifo fifo;
 
+
+	if ((int)(files.size()) > m_maxThreads * 2)
+		fifo.write("Max threads");
 	for (auto &file : files) {
 		if (m_currThreads >= m_maxThreads)
 			break ;

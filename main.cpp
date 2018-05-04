@@ -18,6 +18,7 @@ void usage(const char *prog)
 
 int main(int ac, char **av)
 {
+	Plazza::Fifo::deleteOldFile();
 	Plazza::Plazza plazza;
 	int ret = SUCCESS;
 
