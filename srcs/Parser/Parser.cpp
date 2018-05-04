@@ -21,9 +21,20 @@ Plazza::Parser::Parser()
 Plazza::Parser::~Parser()
 {}
 
-void Plazza::Parser::getInformation(std::string &information, std::string &fileName)
+void Plazza::Parser::getInformation(std::string &information, std::vector<std::string> &files)
 {
-	std::lock_guard<std::mutex> lockGuard(g_file);
+	std::string fileName;
+
+	while (1) {
+		g_file.lock();
+		if (!files.empty()) {
+			fileName = files[0];
+			files.erase(files.begin());
+			g_file.unlock();
+			break;
+		}
+		g_file.unlock();
+	}
 	std::fstream file(fileName);
 	std::string line;
 	std::smatch matches;
@@ -44,6 +55,7 @@ void Plazza::Parser::getInformation(std::string &information, std::string &fileN
 		std::cerr << "Error: bad file." << std::endl;
 		fifo.write("Error");
 	}
+	getInformation(information, files);
 }
 
 void Plazza::Parser::getInformationFromString(std::string &information, std::vector<std::string> &words)
