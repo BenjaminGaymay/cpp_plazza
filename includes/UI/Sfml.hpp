@@ -50,7 +50,6 @@ namespace Plazza {
 		sf::Texture _bgText;
 		sf::Texture _titleImgText;
 		sf::Sprite _title;
-		sf::Music _music;
 		std::vector<sf::Texture> _texture;
 	};
 

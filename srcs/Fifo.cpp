@@ -58,7 +58,7 @@ void Plazza::Fifo::write(std::string msg)
 	int fd = open(m_file.c_str(), O_WRONLY);
 
 	if (fd == ERR_FC)
-		throw std::runtime_error("Error: Can't open fifo file.");
+		throw std::runtime_error("Error: Can't open fifo file to write.");
 	::write(fd, msg.c_str(), msg.size());
 	close(fd);
 }
@@ -70,7 +70,7 @@ std::string Plazza::Fifo::read()
 	int fd = open(m_file.c_str(), O_RDONLY);
 
 	if (fd == ERR_FC)
-		throw std::runtime_error("Error: Can't open fifo file.");
+		throw std::runtime_error("Error: Can't open fifo file to read.");
 	while (::read(fd, &buf, 1) != 0)
 		msg += buf;
 	close(fd);

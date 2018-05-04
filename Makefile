@@ -32,7 +32,9 @@ CPPFLAGS = -I ./includes/		\
 
 CPPFLAGS += -W -Wall -Wextra
 
-LDFLAGS += -pthread -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
+LDFLAGS += -pthread
+
+UILDFLAGS += -pthread -lsfml-graphics -lsfml-window -lsfml-system
 
 COM_COLOR	= \033[0;34m
 OBJ_COLOR	= \033[0;36m
@@ -75,7 +77,7 @@ $(NAME): $(OBJS) $(CLIOBJS)
 
 ui: $(OBJS) $(UIOBJS)
 	 @echo
-	 @$(CC) $(OBJS) $(UIOBJS) -o $(NAME) $(LDFLAGS); \
+	 @$(CC) $(OBJS) $(UIOBJS) -o $(NAME) $(UILDFLAGS); \
 	 RESULT=$$?; \
 	 if [ $$RESULT -ne 0 ]; then \
  		printf $(FORMAT_STRING) "$(COM_COLOR)$(BUILD_STRING)   $(OBJ_COLOR)$(@)" "$(ERROR_COLOR)$(ERROR_STRING)$(NO_COLOR)\n"; \
