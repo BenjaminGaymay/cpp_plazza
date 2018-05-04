@@ -4,8 +4,14 @@ CC	= g++
 
 RM	= rm -f
 
+CLISRCS	= ./srcs/PlazzaCLI.cpp
+
+UISRCS	= ./srcs/PlazzaUI.cpp		\
+	  ./srcs/UI/Sfml.cpp		\
+	  ./srcs/UI/PlazzaSfml.cpp	\
+	  ./srcs/UI/Menu.cpp
+
 SRCS	= ./main.cpp			\
-	  ./srcs/Plazza.cpp		\
 	  ./srcs/ThreadsManager.cpp	\
 	  ./srcs/Parser/Parser.cpp	\
 	  ./srcs/Log/Log.cpp		\
@@ -14,14 +20,19 @@ SRCS	= ./main.cpp			\
 
 OBJS	= $(SRCS:.cpp=.o)
 
+UIOBJS	= $(UISRCS:.cpp=.o)
+
+CLIOBJS	= $(CLISRCS:.cpp=.o)
+
 CPPFLAGS = -I ./includes/		\
 	   -I ./includes/Macro		\
 	   -I ./includes/Parser		\
-	   -I ./includes/Log
+	   -I ./includes/Log		\
+	   -I ./includes/UI
 
 CPPFLAGS += -W -Wall -Wextra
 
-LDFLAGS += -pthread
+LDFLAGS += -pthread -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
 
 COM_COLOR	= \033[0;34m
 OBJ_COLOR	= \033[0;36m
@@ -52,9 +63,19 @@ all: $(NAME)
 	fi;
 
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) $(CLIOBJS)
 	 @echo
-	 @$(CC) $(OBJS) -o $(NAME) $(LDFLAGS); \
+	 @$(CC) $(OBJS) $(CLIOBJS) -o $(NAME) $(LDFLAGS); \
+	 RESULT=$$?; \
+	 if [ $$RESULT -ne 0 ]; then \
+ 		printf $(FORMAT_STRING) "$(COM_COLOR)$(BUILD_STRING)   $(OBJ_COLOR)$(@)" "$(ERROR_COLOR)$(ERROR_STRING)$(NO_COLOR)\n"; \
+	 else \
+		printf $(FORMAT_STRING) "$(COM_COLOR)$(BUILD_STRING)   $(OBJ_COLOR)$(@)" "$(OK_COLOR)$(OK_STRING)$(NO_COLOR)\n"; \
+	 fi;
+
+ui: $(OBJS) $(UIOBJS)
+	 @echo
+	 @$(CC) $(OBJS) $(UIOBJS) -o $(NAME) $(LDFLAGS); \
 	 RESULT=$$?; \
 	 if [ $$RESULT -ne 0 ]; then \
  		printf $(FORMAT_STRING) "$(COM_COLOR)$(BUILD_STRING)   $(OBJ_COLOR)$(@)" "$(ERROR_COLOR)$(ERROR_STRING)$(NO_COLOR)\n"; \
@@ -63,8 +84,13 @@ $(NAME): $(OBJS)
 	 fi;
 
 clean:
-	@$(RM) $(OBJS)
-	@printf "$(DEL_COLOR)$(DEL_STRING)$(NO_COLOR)   %s\n" $(OBJS)
+	@printf "$(DEL_COLOR)$(DEL_STRING)$(NO_COLOR)   %s\n" $(OBJS); \
+	if [ -e $(CLIOBJS) ]; then \
+		printf "$(DEL_COLOR)$(DEL_STRING)$(NO_COLOR)   %s\n" $(CLIOBJS); \
+	else \
+		printf "$(DEL_COLOR)$(DEL_STRING)$(NO_COLOR)   %s\n" $(UIOBJS); \
+	fi;
+	@$(RM) $(OBJS) $(CLIOBJS) $(UIOBJS)
 
 fclean: clean
 	@$(RM) $(NAME)

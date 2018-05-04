@@ -11,7 +11,7 @@ Plazza::Parser::Parser()
 {
 	m_pattern["EMAIL_ADDRESS"] = "(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))";
 	m_pattern["IP_ADDRESS"] = "(\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})";
-	m_pattern["PHONE_NUMBER"] = "(\\d{10})|((\\d{2} ){4}\\d{2})|((\\d{2}\\.){4}\\d{2})";
+	m_pattern["PHONE_NUMBER"] = "(\\d{10})|((\\d{2} ){4}\\d{2})";
 
 	m_convert["PHONE_NUMBER"] = PHONE_NUMBER;
 	m_convert["EMAIL_ADDRESS"] = EMAIL_ADDRESS;
