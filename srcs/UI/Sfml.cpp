@@ -121,15 +121,6 @@ int N_Sfml::getScaleHeight()
 
 sf::Keyboard::Key N_Sfml::getKey()
 {
-	sf::Event event;
-
-	_key = sf::Keyboard::Key::Unknown;
-	while (_window.pollEvent(event)) {
-		if (event.type == sf::Event::KeyPressed){
-			_key = event.key.code;
-			return _key;
-		}
-	}
 	return _key;
 }
 
@@ -139,6 +130,8 @@ std::pair<int, int> N_Sfml::getMousePos()
 	std::pair<int, int> pos = {-1, -1};
 
 	while (_window.pollEvent(event)) {
+		if (event.type == sf::Event::KeyPressed)
+			_key = event.key.code;
 		if (event.type == sf::Event::MouseButtonPressed and
 		event.mouseButton.button == sf::Mouse::Left) {
 			pos.first = event.mouseButton.x;

@@ -19,7 +19,7 @@ void Plazza::PlazzaSfml::addList(std::vector<SfmlText> &objects)
 
 	ls = Menu::listFiles();
 	objects.push_back(SfmlText(10, 8, sf::Color::Blue, "..", SfmlText::directory));
-	for (auto file : ls) {
+	for (auto &file : ls) {
 		stat(file.c_str(), &buf);
 		color = (S_ISDIR(buf.st_mode) ? sf::Color::Blue : sf::Color::White);
 		for (auto select : _realPathFile) {
