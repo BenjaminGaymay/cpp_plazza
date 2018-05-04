@@ -39,16 +39,19 @@ void Plazza::Parser::getInformation(std::string &information, std::vector<std::s
 	std::string line;
 	std::smatch matches;
 	std::regex pattern(m_pattern[information]);
+	Fifo fifo;
 
 	if (file.is_open()) {
 		while (std::getline(file, line)) {
 			if (std::regex_search(line, matches, pattern)) {
 				Log::writeLogs(m_convert[information], matches[0]);
 				std::cout << matches[0] << std::endl;
+				//fifo.write(matches[0]);
 			}
 		}
 	} else {
 		std::cerr << "Error: bad file." << std::endl;
+		fifo.write("Error");
 	}
 	getInformation(information, files);
 }

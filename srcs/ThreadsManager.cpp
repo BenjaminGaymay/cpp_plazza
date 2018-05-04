@@ -38,8 +38,13 @@ void Plazza::ThreadsManager::init_alarm_catch()
 bool Plazza::ThreadsManager::launchThreads(std::string &information, std::vector<std::string> &files)
 {
 	Parser parser;
+	std::string info;
+	std::vector<std::thread> threads;
+	Fifo fifo;
 	int seconds = 5;
 
+	if ((int)(files.size()) > m_maxThreads * 2)
+		fifo.write("Max threads");
 	for (auto i = 0 ; i < m_maxThreads ; i++)
 		std::thread(&Plazza::Parser::getInformation, parser, std::ref(information), std::ref(files)).detach();
 	init_alarm_catch();

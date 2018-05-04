@@ -19,6 +19,7 @@
 #include "macro.hpp"
 #include "Parser.hpp"
 #include "Log.hpp"
+#include "Fifo.hpp"
 
 namespace Plazza {
 	class ThreadsManager {
