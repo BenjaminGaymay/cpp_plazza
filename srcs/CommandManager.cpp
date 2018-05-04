@@ -51,5 +51,7 @@ std::vector<std::string> Plazza::CommandManager::processCommands(std::string &cm
 		} else
 			res.push_back(s);
 	}
+	for (auto &c : res)
+		std::cout << c << std::endl;
 	return res;
 }
