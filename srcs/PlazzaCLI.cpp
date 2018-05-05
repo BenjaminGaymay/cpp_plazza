@@ -53,11 +53,9 @@ void Plazza::Plazza::run()
 			el = StringTools::rstrip(el);
 			el = StringTools::lstrip(el);
 			results = m_commandManager.processCommands(el);
-			// if (results.empty())
-			// 	std::cout << "VIDE" << std::endl;
-			// for (auto result : results) {
-			// 	std::cout << result << std::endl;
-			// }
+			for (auto result : results) {
+				std::cout << result;
+			}
 		}
 	}
 }

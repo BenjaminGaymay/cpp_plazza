@@ -47,8 +47,7 @@ void Plazza::Parser::getInformation(std::string &information, std::vector<std::s
 			if (std::regex_search(line, matches, pattern)) {
 				Log::writeLogs(m_convert[information], matches[0]);
 				res += matches[0];
-				res += ":";
-				std::cout << matches[0] << std::endl;
+				res += "\n";
 			}
 		}
 		fifo.write(res);
