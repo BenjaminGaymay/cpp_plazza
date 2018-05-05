@@ -48,6 +48,7 @@ void Plazza::Parser::getInformation(std::string &information, std::vector<std::s
 				Log::writeLogs(m_convert[information], matches[0]);
 				res += matches[0];
 				res += ":";
+				std::cout << matches[0] << std::endl;
 			}
 		}
 		fifo.write(res);
